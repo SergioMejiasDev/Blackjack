@@ -124,17 +124,38 @@ public class GameManager : MonoBehaviour
     /// <param name="link">The reference of the link that we want to open.</param>
     public void OpenLink(int link)
     {
-        switch (link)
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
         {
-            case 1:
-                Application.OpenURL("https://sergiomejias.itch.io/");
-                break;
-            case 2:
-                Application.OpenURL("https://freesound.org/people/f4ngy/");
-                break;
-            case 3:
-                Application.OpenURL("https://github.com/SergioMejiasDev/Blackjack");
-                break;
+            switch (link)
+            {
+                case 1:
+                    Application.ExternalEval("window.open('https://sergiomejias.itch.io/','_blank')");
+                    break;
+
+                case 2:
+                    Application.ExternalEval("window.open('https://freesound.org/people/f4ngy/','_blank')");
+                    break;
+
+                case 3:
+                    Application.ExternalEval("window.open('https://github.com/SergioMejiasDev/Blackjack','_blank')");
+                    break;
+            }
+        }
+
+        else
+        {
+            switch (link)
+            {
+                case 1:
+                    Application.OpenURL("https://sergiomejias.itch.io/");
+                    break;
+                case 2:
+                    Application.OpenURL("https://freesound.org/people/f4ngy/");
+                    break;
+                case 3:
+                    Application.OpenURL("https://github.com/SergioMejiasDev/Blackjack");
+                    break;
+            }
         }
     }
 

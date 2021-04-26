@@ -30,6 +30,18 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     public void LoadOptions()
     {
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            activeLanguage = PlayerPrefs.GetString("activeLanguage", "EN");
+            muteVolume = PlayerPrefs.GetInt("muteVolume", 0) == 0 ? false : true;
+            gamesPlayed = PlayerPrefs.GetInt("gamesPlayed", 0);
+            gamesWon = PlayerPrefs.GetInt("gamesWon", 0);
+            gamesLost = PlayerPrefs.GetInt("gamesLost", 0);
+            gamesDraw = PlayerPrefs.GetInt("gamesDraw", 0);
+
+            return;
+        }
+
         OptionsData data = new OptionsData();
 
         string json;
@@ -59,6 +71,21 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     public void SaveOptions()
     {
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            PlayerPrefs.SetString("activeLanguage", activeLanguage);
+            PlayerPrefs.SetInt("gamesPlayed", gamesPlayed);
+            PlayerPrefs.SetInt("gamesWon", gamesWon);
+            PlayerPrefs.SetInt("gamesLost", gamesLost);
+            PlayerPrefs.SetInt("gamesDraw", gamesDraw);
+
+            int tempMute = muteVolume ? 1 : 0;
+
+            PlayerPrefs.SetInt("muteVolume", tempMute);
+
+            return;
+        }
+
         OptionsData data = new OptionsData
         {
             activeLanguage = activeLanguage,
